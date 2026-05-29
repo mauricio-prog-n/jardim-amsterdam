@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Jardim">
+<meta name="theme-color" content="#0d1a2e">
+<title>Jardim Amsterdam</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d1a2e;color:#e8f0fe;font-family:Georgia,serif;padding-bottom:20px}
+header{background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.08);padding:16px}
+h1{font-size:18px;color:#a8d8a8}
+.sub{font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px}
+.tabs{display:flex;gap:6px;margin-top:12px}
+.tab{padding:7px 16px;border-radius:20px;border:none;cursor:pointer;font-size:12px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5)}
+.tab.on{background:#4caf50;color:#fff}
+.rooms{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px}
+.rb{padding:5px 11px;border-radius:20px;border:none;cursor:pointer;font-size:11px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.45)}
+#app{padding:14px}
+.wnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.nb{background:rgba(255,255,255,0.08);border:none;color:#fff;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:22px}
+.wtitle{text-align:center}
+.wtitle h2{font-size:14px}
+.wtitle small{font-size:10px;color:rgba(255,255,255,0.35)}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:14px}
+.dc{background:rgba(255,255,255,0.05);border-radius:10px;padding:8px 3px;cursor:pointer;border:1px solid rgba(255,255,255,0.05);min-height:88px;text-align:center}
+.dc.td{background:linear-gradient(160deg,#1b5e20,#2e7d32);border-color:#4caf50}
+.dc.ps{opacity:0.5}
+.dn{font-size:9px;color:rgba(255,255,255,0.35);text-transform:uppercase}
+.dd{font-size:16px;font-weight:bold;margin:2px 0 4px}
+.pw{background:rgba(33,150,243,0.25);border-radius:4px;padding:2px;font-size:9px;margin-bottom:2px}
+.pf{background:rgba(255,193,7,0.25);border-radius:4px;padding:2px;font-size:9px}
+.leg{display:flex;gap:14px;justify-content:center;margin-bottom:16px;font-size:11px;color:rgba(255,255,255,0.4)}
+.rs{background:rgba(255,255,255,0.03);border-radius:10px;padding:10px 12px;margin-bottom:7px;display:flex;align-items:center;justify-content:space-between}
+.rsn{font-size:13px;font-weight:bold}
+.rsc{font-size:10px;color:rgba(255,255,255,0.35)}
+.rst{display:flex;gap:12px;text-align:center;font-size:11px}
+.dnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.dc2{text-align:center}
+.dc2 .a{font-size:12px;color:rgba(255,255,255,0.35);text-transform:uppercase}
+.dc2 .b{font-size:28px;font-weight:bold;line-height:1}
+.dc2 .c{font-size:12px;color:rgba(255,255,255,0.35)}
+.dc2 .e{font-size:10px;color:#4caf50;margin-top:2px}
+.pills{display:flex;gap:8px;margin-bottom:16px;justify-content:center;flex-wrap:wrap}
+.pill{border-radius:20px;padding:7px 14px;font-size:12px}
+.pill.w{background:rgba(33,150,243,0.18);border:1px solid rgba(33,150,243,0.35)}
+.pill.f{background:rgba(255,193,7,0.18);border:1px solid rgba(255,193,7,0.35)}
+.rc{background:rgba(255,255,255,0.03);border-radius:12px;margin-bottom:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06)}
+.rh{padding:10px 12px;display:flex;align-items:center;gap:7px}
+.rdot{width:8px;height:8px;border-radius:50%}
+.rhn{font-size:13px;font-weight:bold}
+.rb2{padding:8px 12px}
+.al{font-size:11px;color:#ffcc02;margin-bottom:8px;padding:5px 8px;background:rgba(255,204,2,0.1);border-radius:6px}
+.pr{padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:8px}
+.pr:last-child{border-bottom:none}
+.pt{font-size:10px;font-weight:bold;padding:2px 5px;border-radius:4px;flex-shrink:0;margin-top:2px}
+.pn{font-size:13px;font-weight:bold;line-height:1.4}
+.wl{color:#90caf9;font-weight:normal}
+.fl{color:#a5d6a7;font-weight:normal}
+.fls{color:#ff8a65;font-weight:normal}
+.pd{font-size:11px;color:rgba(255,255,255,0.38);margin-top:3px;line-height:1.4}
+.rest{text-align:center;padding:60px 20px;color:rgba(255,255,255,0.3)}
+.bbtn{width:100%;margin-top:6px;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:10px;color:rgba(255,255,255,0.5);cursor:pointer;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Jardim de Amsterdam</h1>
+  <div class="sub">CEP 1091 RV - 26 plantas</div>
+  <div class="tabs">
+    <button class="tab on" id="tw" onclick="sv('week')">Semana</button>
+    <button class="tab" id="td" onclick="sv('day')">Hoje</button>
+  </div>
+  <div class="rooms" id="rm"></div>
+</header>
+<div id="app"></div>
+<script>
+var S=new Date("2026-05-24");
+var DN=["Dom","Seg","Ter","Qua","Qui","Sex","Sab"];
+var MN=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+var RM=["Sala","Escritorio","Varanda Menor","Varanda Maior"];
+var RC={"Sala":{a:"#2e7d32",l:"#c8e6c9"},"Escritorio":{a:"#1565c0",l:"#bbdefb"},"Varanda Menor":{a:"#f57f17",l:"#ffecb3"},"Varanda Maior":{a:"#880e4f",l:"#f8bbd9"}};
+var PL=[
+  {id:1,n:"Spathiphyllum",r:"Sala",t:"SP",c:"#2e7d32",w:[0,3],f:28,d:"Vaso bege na escrivaninha. Folhas verde-escuras com flores brancas."},
+  {id:2,n:"Pachira grande",r:"Sala",t:"PA",c:"#2e7d32",w:[0,3,5],f:14,d:"Vaso cinza grande no chao. Tronco trancado, folhas palmadas."},
+  {id:3,n:"Pilea",r:"Sala",t:"PI",c:"#2e7d32",w:[0,4],f:14,d:"Vaso branco pequeno. Folhas redondas como moedas."},
+  {id:4,n:"Calathea",r:"Sala",t:"CA",c:"#2e7d32",w:[0,2,5],f:14,d:"Vaso rosa/cinza. Folhas listradas verde e rosa."},
+  {id:5,n:"Fittonia",r:"Sala",t:"FI",c:"#2e7d32",w:[0,1,3,5],f:28,d:"Vasinho colorido. Folhas pequenas com nervuras brancas."},
+  {id:6,n:"Pachira mini",r:"Escritorio",t:"PM",c:"#1565c0",w:[0,4],f:28,d:"Vaso cinza na prateleira. Mini money tree."},
+  {id:7,n:"ZZ Plant",r:"Escritorio",t:"ZZ",c:"#1565c0",w:[0,5],f:60,d:"Vaso terracota em cesta. Folhas ovaladas brilhantes."},
+  {id:8,n:"Macieira",r:"Varanda Menor",t:"MA",c:"#f57f17",w:[0,1,3,5],f:14,fn:"Fert. Frutiferas K alto",d:"Vaso preto grande. Folhas serrilhadas, frutinhos verdes."},
+  {id:9,n:"Amoreira",r:"Varanda Menor",t:"AM",c:"#f57f17",w:[0,1,3,5],f:14,d:"Vaso amarelo com tutores de bambu. Frutinhos verdes."},
+  {id:10,n:"Oliveira",r:"Varanda Menor",t:"OL",c:"#f57f17",w:[0,3],f:14,d:"Vaso preto na grade. Folhas prateadas, flores abertas."},
+  {id:11,n:"Alecrim",r:"Varanda Menor",t:"AL",c:"#f57f17",w:[0,4],f:28,d:"Canteiro branco. Tres touceiras perfumadas."},
+  {id:12,n:"Cycas revoluta",r:"Varanda Menor",t:"CY",c:"#f57f17",w:[0,5],f:28,fn:"Fert. Palmeiras",d:"Vaso cobre na mesa. Folhas em leque, aspecto pre-historico."},
+  {id:13,n:"Cacto colunar",r:"Varanda Menor",t:"CC",c:"#f57f17",w:[0,5],f:28,fn:"Fert. Cactos",d:"Vaso preto quadrado. Cacto alto com espinhos."},
+  {id:14,n:"Heras 3x baldes",r:"Varanda Menor",t:"HE",c:"#f57f17",w:[0,3],f:14,d:"Tres baldes metalicos na grade. Heras cascateando."},
+  {id:15,n:"Mirtileiro 1",r:"Varanda Maior",t:"M1",c:"#880e4f",w:[0,2,4],f:14,fn:"Fert. Ericaceas",d:"Vaso cinza claro. Frutinhos azul-verdes se formando."},
+  {id:16,n:"Mirtileiro 2",r:"Varanda Maior",t:"M2",c:"#880e4f",w:[0,2,4],f:14,fn:"Fert. Ericaceas",d:"Vaso escuro grande. Arbusto espalhado com frutinhos."},
+  {id:17,n:"Acer palmatum",r:"Varanda Maior",t:"AC",c:"#880e4f",w:[0,2,4],f:14,d:"Vaso preto cilindrico. Arvore japonesa, folhas recortadas."},
+  {id:18,n:"Skimmia japonica",r:"Varanda Maior",t:"SK",c:"#880e4f",w:[0,4],f:28,d:"Vaso cinza esverdeado. Bagas vermelhas brilhantes."},
+  {id:19,n:"Yucca grande",r:"Varanda Maior",t:"YG",c:"#880e4f",w:[0,5],f:28,d:"Vaso de vime grande. Dois troncos com folhas pontiagudas."},
+  {id:20,n:"Yucca pequena",r:"Varanda Maior",t:"YP",c:"#880e4f",w:[0,5],f:28,d:"Vaso de vime menor. Yucca jovem com folhas em espada."},
+  {id:21,n:"Sansevieria",r:"Varanda Maior",t:"SA",c:"#880e4f",w:[0,5],f:60,d:"Vaso preto pequeno. Folhas verticais com listras claras."},
+  {id:22,n:"Tagetes",r:"Varanda Maior",t:"TA",c:"#880e4f",w:[0,2,5],f:14,d:"Canteiro longo. Flores amarelas vibrantes."},
+  {id:23,n:"Kalanchoe",r:"Varanda Maior",t:"KA",c:"#880e4f",w:[0,5],f:28,d:"Vaso verde. Flores rosas e Sempervivum ao lado."},
+  {id:24,n:"Cipreste Thuya",r:"Varanda Maior",t:"CI",c:"#880e4f",w:[0,3],f:28,d:"Vaso branco. Conifera piramidal compacta."},
+  {id:25,n:"Heras suspensas",r:"Varanda Maior",t:"HS",c:"#880e4f",w:[0,3],f:14,d:"Duas cestas de juta. Heras cascateando."},
+  {id:26,n:"Cordyline",r:"Varanda Maior",t:"CO",c:"#880e4f",w:[0,3],f:14,d:"Vaso preto. Folhas longas em leque verde-amarelado."}
+];
+var view="week",wo=0,ar="Todos",sd=new Date();sd.setHours(0,0,0,0);
+(function(){
+  var el=document.getElementById("rm");
+  ["Todos"].concat(RM).forEach(function(r){
+    var b=document.createElement("button");
+    b.className="rb";b.textContent=r;
+    if(r==="Todos"){b.style.background="#4caf50";b.style.color="#fff";}
+    b.onclick=function(){sr(r);};
+    el.appendChild(b);
+  });
+})();
+function off(d){var a=new Date(d);a.setHours(0,0,0,0);var b=new Date(S);b.setHours(0,0,0,0);return Math.round((a-b)/86400000);}
+function rw(p,o){return o>=0&&p.w.indexOf(o%7)>=0;}
+function rf(p,o){return o>=0&&(o%p.f)===0;}
+function fp(){return ar==="Todos"?PL:PL.filter(function(p){return p.r===ar;});}
+function wd(n){return Array.from({length:7},function(_,i){var d=new Date(S);d.setDate(d.getDate()+n*7+i);return d;});}
+function it(d){var t=new Date();t.setHours(0,0,0,0);return d.toDateString()===t.toDateString();}
+function ip(d){var t=new Date();t.setHours(0,0,0,0);return d<t;}
+function sv(v){
+  view=v;
+  if(v==="day"){sd=new Date();sd.setHours(0,0,0,0);}
+  document.querySelectorAll(".tab").forEach(function(b){b.classList.remove("on");});
+  document.getElementById(v==="week"?"tw":"td").classList.add("on");
+  render();
+}
+function sr(r){
+  ar=r;
+  document.querySelectorAll(".rb").forEach(function(b){
+    var m=b.textContent===r;
+    b.style.background=m?(RC[r]?RC[r].a:"#4caf50"):"rgba(255,255,255,0.07)";
+    b.style.color=m?"#fff":"rgba(255,255,255,0.45)";
+  });
+  render();
+}
+function gd(ts){sd=new Date(ts);sv("day");}
+function render(){document.getElementById("app").innerHTML=view==="week"?rWeek():rDay();}
+function rWeek(){
+  var pl=fp(),dates=wd(wo);
+  var lb=wo===0?"Esta semana":wo===1?"Proxima semana":wo===-1?"Semana passada":"Semana "+(wo>0?"+":"")+wo;
+  var rg=dates[0].getDate()+" "+MN[dates[0].getMonth()]+" - "+dates[6].getDate()+" "+MN[dates[6].getMonth()];
+  var cells="";
+  dates.forEach(function(d){
+    var o=off(d),w=pl.filter(function(p){return rw(p,o);}),f=pl.filter(function(p){return rf(p,o);});
+    var cl="dc"+(it(d)?" td":ip(d)?" ps":"");
+    cells+='<div class="'+cl+'" onclick="gd('+d.getTime()+')">'
+      +'<div class="dn">'+DN[d.getDay()]+'</div>'
+      +'<div class="dd">'+d.getDate()+'</div>'
+      +(w.length?'<div class="pw">Agua '+w.length+'</div>':"")
+      +(f.length?'<div class="pf">Fert '+f.length+'</div>':"")
+      +(!w.length&&!f.length?'<div style="opacity:0.2;margin-top:4px">-</div>':"")
+      +'</div>';
+  });
+  var rows="";
+  RM.forEach(function(room){
+    var rp=PL.filter(function(p){return p.r===room;}),tw=0,tf=0;
+    dates.forEach(function(d){var o=off(d);rp.forEach(function(p){if(rw(p,o))tw++;if(rf(p,o))tf++;});});
+    var c=RC[room];
+    rows+='<div class="rs" style="border-left:3px solid '+c.a+'">'
+      +'<div><div class="rsn" style="color:'+c.l+'">'+room+'</div><div class="rsc">'+rp.length+' plantas</div></div>'
+      +'<div class="rst">'+(tw?'<div>Agua<br><b style="color:#90caf9">'+tw+'x</b></div>':"")+(tf?'<div>Fert<br><b style="color:#fff176">'+tf+'x</b></div>':"")+'</div>'
+      +'</div>';
+  });
+  return '<div class="wnav"><button class="nb" onclick="wo--;render()">&#8249;</button>'
+    +'<div class="wtitle"><h2>'+lb+'</h2><small>'+rg+'</small></div>'
+    +'<button class="nb" onclick="wo++;render()">&#8250;</button></div>'
+    +'<div class="grid">'+cells+'</div>'
+    +'<div class="leg"><span>Agua = Regar</span><span>Fert = Adubar</span></div>'
+    +'<div style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:8px">Resumo por comodo</div>'+rows;
+}
+function rDay(){
+  var pl=fp(),o=off(sd);
+  var pv=new Date(sd);pv.setDate(pv.getDate()-1);
+  var nx=new Date(sd);nx.setDate(nx.getDate()+1);
+  var wa=pl.filter(function(p){return rw(p,o);}),fe=pl.filter(function(p){return rf(p,o);});
+  var tm=it(sd);
+  var h='<div class="dnav"><button class="nb" onclick="gd('+pv.getTime()+')">&#8249;</button>'
+    +'<div class="dc2"><div class="a">'+DN[sd.getDay()]+'</div>'
+    +'<div class="b" style="color:'+(tm?"#a5d6a7":"#fff")+'">'+sd.getDate()+'</div>'
+    +'<div class="c">'+MN[sd.getMonth()]+" "+sd.getFullYear()+'</div>'
+    +(tm?'<div class="e">hoje</div>':"")
+    +'</div><button class="nb" onclick="gd('+nx.getTime()+')">&#8250;</button></div>';
+  if(!wa.length&&!fe.length){
+    h+='<div class="rest"><div style="font-size:36px;margin-bottom:10px">:)</div>Dia de descanso!<br><small>Nenhuma tarefa hoje.</small></div>';
+  } else {
+    h+='<div class="pills">'+(wa.length?'<div class="pill w">Regar: '+wa.length+' plantas</div>':"")+(fe.length?'<div class="pill f">Adubar: '+fe.length+' plantas</div>':"")+'</div>';
+    RM.forEach(function(room){
+      var rp=pl.filter(function(p){return p.r===room;});
+      var w=wa.filter(function(p){return p.r===room;}),f=fe.filter(function(p){return p.r===room;});
+      if(!w.length&&!f.length)return;
+      var c=RC[room],cm=w.slice();
+      f.forEach(function(p){if(cm.indexOf(p)<0)cm.push(p);});
+      var all=cm.length===rp.length&&rp.length>1;
+      var rows="";
+      cm.forEach(function(p){
+        var hw=w.indexOf(p)>=0,hf=f.indexOf(p)>=0;
+        rows+='<div class="pr"><div class="pt" style="background:'+p.c+'30;color:'+p.c+';border:1px solid '+p.c+'50">'+p.t+'</div>'
+          +'<div><div class="pn">'+p.n
+          +(hw?'<span class="wl"> - regar</span>':"")
+          +(hf?'<span class="'+(p.fn?"fls":"fl")+'"> - '+(p.fn?p.fn:"adubar")+'</span>':"")
+          +'</div><div class="pd">'+p.d+'</div></div></div>';
+      });
+      h+='<div class="rc"><div class="rh" style="background:linear-gradient(135deg,'+c.a+'30,'+c.a+'0d);border-bottom:1px solid '+c.a+'30">'
+        +'<div class="rdot" style="background:'+c.a+'"></div><span class="rhn" style="color:'+c.l+'">'+room+'</span></div>'
+        +'<div class="rb2">'+(all?'<div class="al">Acao em TODAS as plantas deste comodo!</div>':"")
+        +rows+'</div></div>';
+    });
+  }
+  h+='<button class="bbtn" onclick="sv(\'week\')">&#8592; Voltar para semana</button>';
+  return h;
+}
+render();
+</script>
+</body>
+</html>
